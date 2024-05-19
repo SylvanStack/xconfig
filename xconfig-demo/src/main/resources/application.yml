@@ -1,0 +1,14 @@
+x:
+  a: a00
+  b: b00
+  c: c00
+
+spring:
+  application:
+    name: xconfig-demo
+server:
+  port: 8888
+logging:
+  level:
+    root: info
+    com.yuanstack: debug
