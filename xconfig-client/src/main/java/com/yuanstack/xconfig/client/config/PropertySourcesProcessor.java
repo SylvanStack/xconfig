@@ -40,7 +40,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
         String ns = ENV.getProperty("xconfig.ns", "public");
         String configServer = ENV.getProperty("xconfig.configServer", "http://localhost:9129");
         ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
-        XConfigService configService = XConfigService.getDefault(configMeta);
+        XConfigService configService = XConfigService.getDefault(applicationContext, configMeta);
 
         XPropertySource propertySource = new XPropertySource(X_PROPERTY_SOURCE, configService);
         CompositePropertySource composite = new CompositePropertySource(X_PROPERTY_SOURCES);

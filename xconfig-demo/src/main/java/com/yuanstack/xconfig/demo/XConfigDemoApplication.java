@@ -27,8 +27,6 @@ public class XConfigDemoApplication {
     @Value("${x.a}.${x.b}")
     private String a;
 
-    @Value("${x.b}")
-    private String b;
     final Environment environment;
 
     @Autowired
