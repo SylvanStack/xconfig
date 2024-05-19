@@ -4,6 +4,7 @@ import com.yuanstack.xconfig.server.dal.ConfigsMapper;
 import com.yuanstack.xconfig.server.model.Configs;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 public class XConfigController {
     private final ConfigsMapper mapper;
 
+    Map<String, Long> VERSIONS = new HashMap<>();
     public XConfigController(ConfigsMapper mapper) {
         this.mapper = mapper;
     }
@@ -32,6 +34,7 @@ public class XConfigController {
                                 @RequestParam("ns") String ns,
                                 @RequestBody Map<String, String> params) {
         params.forEach((k, v) -> insertOrUpdate(new Configs(app, env, ns, k, v)));
+        VERSIONS.put(app + "-" + env + "-" + ns, System.currentTimeMillis());
         return mapper.list(app, env, ns);
     }
 
@@ -43,5 +46,10 @@ public class XConfigController {
         } else {
             mapper.update(configs);
         }
+    }
+
+    @GetMapping("/version")
+    public long version(String app, String env, String ns) {
+        return VERSIONS.getOrDefault(app + "-" + env + "-" + ns, -1L);
     }
 }

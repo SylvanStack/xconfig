@@ -10,3 +10,6 @@ Content-Type: application/json
   "x.c": "cc200",
   "x.d": "dd200"
 }
+
+### version
+GET http://localhost:9129/version?app=app1&env=dev&ns=public
