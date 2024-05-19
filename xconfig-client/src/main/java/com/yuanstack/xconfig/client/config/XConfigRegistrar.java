@@ -1,5 +1,6 @@
 package com.yuanstack.xconfig.client.config;
 
+import com.yuanstack.xconfig.client.value.SpringValueProcessor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -18,6 +19,7 @@ public class XConfigRegistrar implements ImportBeanDefinitionRegistrar {
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
                                         BeanDefinitionRegistry registry) {
         registerClass(registry, PropertySourcesProcessor.class);
+        registerClass(registry, SpringValueProcessor.class);
     }
 
     private static void registerClass(BeanDefinitionRegistry registry, Class<?> aClass) {
