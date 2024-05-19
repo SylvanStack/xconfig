@@ -13,9 +13,6 @@ import org.springframework.core.env.CompositePropertySource;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * property sources processor.
  *
@@ -37,12 +34,14 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
         if (ENV.getPropertySources().contains(X_PROPERTY_SOURCES)) {
             return;
         }
-        // 通过 HTTP 请求，去 xconfig-server 中获取配置
-        Map<String, String> config = new HashMap<>();
-        config.put("x.a", "a123");
-        config.put("x.b", "b333");
-        config.put("x.c", "c456");
-        XConfigService configService = new XConfigServiceImpl(config);
+
+        String app = ENV.getProperty("xconfig.app", "app1");
+        String env = ENV.getProperty("xconfig.env", "dev");
+        String ns = ENV.getProperty("xconfig.ns", "public");
+        String configServer = ENV.getProperty("xconfig.configServer", "http://localhost:9129");
+        ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
+        XConfigService configService = XConfigService.getDefault(configMeta);
+
         XPropertySource propertySource = new XPropertySource(X_PROPERTY_SOURCE, configService);
         CompositePropertySource composite = new CompositePropertySource(X_PROPERTY_SOURCES);
         composite.addPropertySource(propertySource);
