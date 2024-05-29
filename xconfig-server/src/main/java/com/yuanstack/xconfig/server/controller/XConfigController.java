@@ -1,5 +1,6 @@
 package com.yuanstack.xconfig.server.controller;
 
+import com.yuanstack.xconfig.server.DistributedLocks;
 import com.yuanstack.xconfig.server.dal.ConfigsMapper;
 import com.yuanstack.xconfig.server.model.Configs;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,14 @@ import java.util.Map;
  */
 @RestController
 public class XConfigController {
+    private final DistributedLocks locks;
     private final ConfigsMapper mapper;
 
     Map<String, Long> VERSIONS = new HashMap<>();
-    public XConfigController(ConfigsMapper mapper) {
+
+    public XConfigController(ConfigsMapper mapper, DistributedLocks locks) {
         this.mapper = mapper;
+        this.locks = locks;
     }
 
     @GetMapping("/list")
@@ -51,5 +55,10 @@ public class XConfigController {
     @GetMapping("/version")
     public long version(String app, String env, String ns) {
         return VERSIONS.getOrDefault(app + "-" + env + "-" + ns, -1L);
+    }
+
+    @GetMapping("/status")
+    public boolean status() {
+        return locks.getLocked().get();
     }
 }
