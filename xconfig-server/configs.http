@@ -13,3 +13,24 @@ Content-Type: application/json
 
 ### version
 GET http://localhost:9129/version?app=app1&env=dev&ns=public
+
+### update xprc config
+POST http://localhost:9129/update?app=app1&env=dev&ns=public
+Content-Type: application/json
+
+{
+  "xrpc.provider.metas.dc": "sz",
+  "xrpc.provider.metas.gray": "false",
+  "xrpc.provider.metas.unit": "S008",
+  "xrpc.provider.metas.tc": 250
+}
+
+
+### get status
+GET http://localhost:9129/status
+
+### get status 9130
+GET http://localhost:9130/status
+
+### get status 9131
+GET http://localhost:9131/status

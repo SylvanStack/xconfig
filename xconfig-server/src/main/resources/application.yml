@@ -5,20 +5,24 @@ spring:
   application:
     name: xconfig-server
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:h2db
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:h2db
+#    username: root
+#    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xconfig?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
-  sql:
-    init:
-      schema-locations: classpath:db.sql
-      mode: always
-  h2:
-    console:
-      enabled: true
-      path: /h2
-      settings:
-        web-allow-others: true
+    password: mysql123456
+#  sql:
+#    init:
+#      schema-locations: classpath:db.sql
+#      mode: always
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+#      settings:
+#        web-allow-others: true
 
 logging:
   level:
